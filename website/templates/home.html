@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1 align="center">Enter your scores</h1>
+
+<style>
+    /* Custom styles for table header */
+    .table thead th {
+        background-color: #f2f2f2; /* Grey background */
+    }
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end; /* Align buttons to the right */
+    }
+</style>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Note</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for note in user.notes %}
+        <tr>
+            <td><strong>{{ note.title }}</strong></td>
+            <td>{{ note.data }}</td>
+            <td class="action-buttons">
+                <button class="btn btn-sm btn-info" onClick="editNote({{ note.id }}, '{{ note.title }}', '{{ note.data }}')">
+                    Edit
+                </button>
+                <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<form method="POST">
+    <input type="text" name="title" id="title" class="form-control" placeholder="Enter hole description" />
+    <textarea name="note" id="note" class="form-control" placeholder="Enter your score"></textarea>
+    <br />
+    <input type="hidden" id="noteId" name="note_id" value="" /> <!-- Hidden field for note ID -->
+    <div align="center">
+        <button type="submit" class="btn btn-primary" id="submitButton">Add Note</button>
+    </div>
+</form>
+{% endblock %}
