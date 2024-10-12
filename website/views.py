@@ -50,3 +50,13 @@ def delete_note():
         else:
             return jsonify({'success': False, 'message': 'Unauthorized or note not found!'}), 403
     return jsonify({'success': False, 'message': 'Invalid note ID!'}), 400
+
+@views.route('/summary', methods=['GET'])
+@login_required
+def summary():
+    return render_template("summary.html", user=current_user)
+
+@views.route('/contactinfo', methods=['GET'])
+@login_required
+def contact_info():
+    return render_template("contactinfo.html", user=current_user)
