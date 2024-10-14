@@ -1,7 +1,30 @@
-{% extends "base.html" %} {% block title %}Summary{% endblock %} {% block content
-    %}
-    <form method="POST">
-      <h3 align="center">This will be the data summary page</h3>
-      
+{% extends "base.html" %}
+{% block title %}Summary{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 align="center">Data Summary Page</h3>
+
+    <!-- Search Form -->
+    <form method="POST" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" name="search_query" placeholder="Search notes" aria-label="Search" required>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-    {% endblock %}
+
+    <!-- Display Search Results -->
+    {% if notes %}
+    <h5 class="mt-4">Search Results:</h5>
+    <ul class="list-group">
+        {% for note in notes %}
+        <li class="list-group-item">
+            <h5>{{ note.title }}</h5>
+            <p>{{ note.data }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <!-- This part is displayed when there are no search results or no search query -->
+    <h5 class="mt-4">No notes to display. Please enter a search term.</h5>
+    {% endif %}
+</div>
+{% endblock %}

@@ -51,10 +51,27 @@ def delete_note():
             return jsonify({'success': False, 'message': 'Unauthorized or note not found!'}), 403
     return jsonify({'success': False, 'message': 'Invalid note ID!'}), 400
 
-@views.route('/summary', methods=['GET'])
+@views.route('/summary', methods=['GET', 'POST'])
 @login_required
 def summary():
-    return render_template("summary.html", user=current_user)
+    notes = []
+    if request.method == 'POST':
+        search_query = request.form.get('search_query')
+
+        if search_query:
+            # Replace '*' with '%' for SQL LIKE wildcard search
+            search_query = search_query.replace('*', '%')
+            
+            # Perform the search in both title and data fields
+            notes = Note.query.filter(
+                (Note.title.ilike(f'%{search_query}%')) |
+                (Note.data.ilike(f'%{search_query}%'))
+            ).filter_by(user_id=current_user.id).all()
+
+            if not notes:
+                flash('No results found for your search.', category='error')
+    
+    return render_template("summary.html", user=current_user, notes=notes)
 
 @views.route('/contactinfo', methods=['GET'])
 @login_required
