@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Note
+from .models import Note, Address, Phone
 from . import db
 import json
+from werkzeug.security import generate_password_hash
 
 views = Blueprint('views', __name__)
 
@@ -73,7 +74,52 @@ def summary():
     
     return render_template("summary.html", user=current_user, notes=notes)
 
-@views.route('/contactinfo', methods=['GET'])
+@views.route('/contactinfo', methods=['GET', 'POST'])
 @login_required
 def contact_info():
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        phone = request.form.get('phone')
+        address = request.form.get('address')
+        city = request.form.get('city')
+        state = request.form.get('state')
+        postal_code = request.form.get('postal_code')
+        country = request.form.get('country')
+        new_password = request.form.get('password')
+        password_confirm = request.form.get('password_confirm')
+
+        # Update user's first name and last name
+        current_user.first_name = first_name
+        current_user.last_name = last_name
+
+        # Update phone number
+        if current_user.phones:
+            current_user.phones[0].phone_number = phone
+        else:
+            new_phone = Phone(phone_number=phone, user_id=current_user.id)
+            db.session.add(new_phone)
+
+        # Update address fields
+        if current_user.addresses:
+            address_entry = current_user.addresses[0]
+            address_entry.street = address
+            address_entry.city = city
+            address_entry.state = state
+            address_entry.postal_code = postal_code
+            address_entry.country = country
+        else:
+            new_address = Address(street=address, city=city, state=state,
+                                  postal_code=postal_code, country=country,
+                                  user_id=current_user.id)
+            db.session.add(new_address)
+
+        # Update password if provided
+        if new_password and new_password == password_confirm:
+            current_user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
+
+        db.session.commit()
+        flash('Contact information updated successfully!', category='success')
+        return redirect(url_for('views.contact_info'))
+
     return render_template("contactinfo.html", user=current_user)
