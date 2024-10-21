@@ -11,11 +11,11 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    
+
     # Check if the app is running in Heroku by checking for the 'DATABASE_URL' environment variable
     if os.environ.get('DATABASE_URL'):
         # Heroku uses PostgreSQL
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "postgresql+psycopg2://", 1)  # Ensure correct URI
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     else:
         # Local development uses SQLite
         app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
