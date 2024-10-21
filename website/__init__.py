@@ -1,29 +1,29 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-import os
 
 db = SQLAlchemy()
-migrate = Migrate()  # Initialize Flask-Migrate
-
-DB_NAME = "database.db"
+migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
 
-    # Check if the app is running in Heroku by checking for the 'DATABASE_URL' environment variable
-    if os.environ.get('DATABASE_URL'):
-        # Heroku uses PostgreSQL
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+    database_url = os.environ.get('DATABASE_URL')
+
+    if database_url:
+        # Replace 'postgres://' with 'postgresql://' for SQLAlchemy
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     else:
         # Local development uses SQLite
-        app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'your-secret-key'
 
     db.init_app(app)
-    migrate.init_app(app, db)  # Bind Flask-Migrate to the app
+    migrate.init_app(app, db)
 
     from .views import views
     from .auth import auth
@@ -34,13 +34,7 @@ def create_app():
     from .models import User, Note
 
     with app.app_context():
-        # Create the instance folder if it does not exist
-        if not os.path.exists('instance'):
-            os.makedirs('instance')
-
-        # If SQLite, create the database file if it does not exist
-        if not os.path.exists(f'instance/{DB_NAME}'):
-            db.create_all()
+        db.create_all()
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
