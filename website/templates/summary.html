@@ -14,16 +14,23 @@
     <!-- Display Search Results -->
     {% if notes %}
     <h5 class="mt-4">Search Results:</h5>
-    <ul class="list-group">
-        {% for note in notes %}
-        <li class="list-group-item">
-            <h5>{{ note.title }}</h5>
-            <p>{{ note.data }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+            <tr>
+                <td><strong>{{ note.title }}</strong></td>
+                <td>{{ note.data }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% else %}
-    <!-- This part is displayed when there are no search results or no search query -->
     <h5 class="mt-4">No notes to display. Please enter a search term.</h5>
     {% endif %}
 </div>
