@@ -5,32 +5,32 @@ This project is website to track golf notes during a round.  It is meant to show
 ## Project Tasks
 - **Task 1: Set up the development environment**
   - Create a project description document
-    o	The purpose of the application
-    o	The programming language(s) you will use
-    o	For web applications, technology required to run the application
-    o	How data will be stored
-    o	What security measures you will implement
+    - The purpose of the application
+    - The programming language(s) you will use
+    - For web applications, technology required to run the application
+    - How data will be stored
+    - What security measures you will implement
 	
 - **Task 2: Plan the project**
-  - a.	Finish setting up environment
-    b.	Finish Rough sketch of all needed screens	
-    c.	Build a relational model that supports data to be captured
-    d.	Complete a functioning Login Screen
-    e.	Start development on 4 other screens indicating their purpose
+  - Finish setting up environment
+  -	Finish Rough sketch of all needed screens	
+  - Build a relational model that supports data to be captured
+  - Complete a functioning Login Screen
+  - Start development on 4 other screens indicating their purpose
 
 - **Task 3: Implement core features**
-  - a.	Finalize/validate technology stack
-    b.	Deploy application to GitHub
-    c.	Create a page with the ability to search for previous round data
-    d.	Allow users to change their passwords.
-    e.	Begin template for final presentation
+  - Finalize/validate technology stack
+  -	Deploy application to GitHub
+  -	Create a page with the ability to search for previous round data
+  - Allow users to change their passwords.
+  -	Begin template for final presentation
 
 - **Task 4: Test the application**
-  - a.	Finish contact page allowing users to change password.
-    b.	Apply stylesheet to all website pages
-    c.	Ability to add/edit/delete round data complete
-    d.	Create a report page to summarize data
-    e.	Update template to final presentation
+  -	Finish contact page allowing users to change password.
+  -	Apply stylesheet to all website pages
+  -	Ability to add/edit/delete round data complete
+  -	Create a report page to summarize data
+  -	Update template to final presentation
 
 - **Task 5: Document the project**
   - Create a comprehensive README file
@@ -56,9 +56,9 @@ This project is website to track golf notes during a round.  It is meant to show
 - **Agile Methodology**: Emphasizing iterative development, continuous feedback, and collaboration.
 
 ## Link to Project
--GitHub repository - https://github.com/SamuelRogerCrespo/GolfProject
--Heroku deployment - https://golftrackerprod-ea4ffa2e8b31.herokuapp.com
+- GitHub repository - https://github.com/SamuelRogerCrespo/GolfProject
+- Heroku deployment - https://golftrackerprod-ea4ffa2e8b31.herokuapp.com
 
 ## Use the following account credential to test data.
-Email: Test@ecpi.com
-Password Test123
+- Email: Test@ecpi.com
+- Password: Test123
